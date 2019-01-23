@@ -9,7 +9,7 @@ def get_information(tweet):
     :param tweet: Single tweet in html format.
     """
     result = {}
-    result['user_name'] = tweet.find('span', attrs={'class': 'username'}).get('text')
+    result['user_name'] = tweet.find('span', attrs={'class': 'username'}).text
     result['time_created'] = tweet.find('small', attrs={'class': 'time'}).text.strip()
     result['hour_created'] = tweet.find('a', attrs={'class': 'tweet-timestamp'}).get('title')
     result['tweet_text'] = tweet.find('p', attrs={'class': 'js-tweet-text'}).text
@@ -31,10 +31,10 @@ def scrape_twitter_page():
 
     data = pd.DataFrame([get_information(tweet) for tweet in page])
 
-    data.reindex(columns=['user_name', 'time_created', 'hour_created', 'lang', 'stats', 'tweet_text'])
+    data = data[['user_name', 'time_created', 'hour_created', 'lang', 'stats', 'tweet_text']]
 
     dirname = os.path.dirname(__file__)
-    output_file = os.path.join(os.path.dirname(dirname), os.path.join('data', 'data.csv'))
+    output_file = os.path.join(os.path.dirname(dirname), os.path.join('data', 'tweets.csv'))
 
     if os.path.exists(output_file):
         data.to_csv(output_file, mode='a', index=False, header=False)
