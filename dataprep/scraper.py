@@ -50,6 +50,7 @@ def basic_infinite_scroll():
     driver = webdriver.Chrome(
         r'C:\Users\C18244A\Documents\python talks notes\chrome_driver\chromedriver.exe')
 
+    # tried 'https://twitter.com/search?l=&q=%23Plovdiv2019%20%23ECoC%20OR%20%23ecoc&src=typd'
     driver.base_url = 'https://twitter.com/search?l=&q=%23Plovdiv2019%20%23ECoC&src=typd&lang=en'
     driver.get(driver.base_url)
 
