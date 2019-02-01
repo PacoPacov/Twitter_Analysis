@@ -42,5 +42,49 @@ def scrape_twitter_page():
         data.to_csv(output_file, index = False)
 
 
+def basic_infinite_scroll():
+    from selenium import webdriver
+    import time
+
+
+    driver = webdriver.Chrome(
+        r'C:\Users\C18244A\Documents\python talks notes\chrome_driver\chromedriver.exe')
+
+    driver.base_url = 'https://twitter.com/search?l=&q=%23Plovdiv2019%20%23ECoC&src=typd&lang=en'
+    driver.get(driver.base_url)
+
+    html_source = driver.page_source
+    dailyemail_links = html_source.encode('utf-8')
+
+    data = []
+    for i in range(6):
+        soup = BeautifulSoup(dailyemail_links, "html.parser")
+
+        print('Number of iterations: ', i)
+
+        page = soup.findAll('li', attrs={'class': 'js-stream-item'})
+        data.extend([get_information(tweet) for tweet in page])
+
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+
+    print('Size of data: ', len(data))
+
+    df = pd.DataFrame(data)
+    print(df.shape)
+
+    print(df.head())
+
+    dirname = os.path.dirname(__file__)
+    output_file = os.path.join(
+        os.path.dirname(dirname), 
+        os.path.join('data', "tweets_{}.csv".format(time.strftime("%d_%m_%Y"))))
+
+    if os.path.exists(output_file):
+        df.to_csv(output_file, mode='a', index=False, header=False)
+    else:
+        df.to_csv(output_file, index=False)
+
+
 if __name__ == "__main__":
-    scrape_twitter_page()
+    basic_infinite_scroll()
