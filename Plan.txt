@@ -1,0 +1,10 @@
+Plan:
+    Creating Label
+        1) Afinn score
+        2) MIT SO-CAL score
+        3) Vader sentiment analysis - for social media text 
+        4) Combine them and make a syntetic label, so that way we can try more ML algorithms
+    After we have an label we can transform the data with:
+        1) Bag Of Words
+        2) TF-IDF
+    Use the transformed data and the syntetic label in ML models to see how well they will predict the data.
