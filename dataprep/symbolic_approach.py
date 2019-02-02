@@ -1,9 +1,12 @@
 def evaluate(text):
     lexicon = {}
-    neg_lexicon = {}
-    intense_list = {}
-    deminisher_list = {}
-    excl_list = {}
+    neg_list = ["no", "not", "nor", "neither", "aint", "none", "isnt", "wasnt",
+               "doesent", "wont", "never"]
+    intense_list = {"too": 10, "completely": 9, "remarkably": 8, "unusually": 7,
+                   "incredibly": 6, "extremely": 5, "really": 4, "very": 3,
+                   "totally": 9, "quite": 2, "rather": 2}
+    deminisher_list = {"bit": 0.5, "little": 0.5, "hardly": 0.5,
+                      "barely": 0.5}
 
     pos_instance, neg_instance = 0, 0
     max_pos, min_neg = 1, -1
@@ -35,11 +38,11 @@ def evaluate(text):
                         word_value = word_value + deminisher_list[text[i]]
                     else:
                         word_value = - word_value - deminisher_list[text[i]]
-                if text[i] in excl_list:
-                    if word_value <=0:
-                        word_value += -1
-                    else:
-                        word_value += 1 
+#                 if text[i] in excl_list:
+#                     if word_value <=0:
+#                         word_value += -1
+#                     else:
+#                         word_value += 1 
         if word_value > 5:
             word_value = 5
         if word_value < -5:
