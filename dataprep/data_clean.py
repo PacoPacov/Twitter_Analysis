@@ -25,3 +25,23 @@ def tweet_cleaner(tweet):
     letters_only = re.sub("[^a-zA-Z]", " ", tweet)
     lower_case = letters_only.lower()
     return lower_case
+
+
+def prep_tweet(tweet):
+    return list(nlp(tweet).sents)
+#     return [sentiment_analyzer_scores(x) for x in nlp(tweet).sents]
+
+
+def prep(tw):
+    import re
+
+    tw = tw.replace('http', ' http')
+    tw = tw.replace('pic.tw', ' pic.tw')
+
+    tw = re.sub(r'#\w+', '', tw)
+    tw = re.sub(r'http.+', '', tw)
+    tw = re.sub(r'pic.tw.+', '', tw)
+
+    tw.replace('\n', '')
+
+    return tw
