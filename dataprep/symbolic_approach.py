@@ -1,22 +1,29 @@
 import pandas as pd
+import os
 
 
 def evaluate(text):
-    df = pd.read_csv('../lexicon/emo_sentic_net_new.csv')
+    dir = os.path.dirname(__file__)
+    path = os.path.join(os.path.dirname(dir), 'lexicons\\emo_sentic_net_new.csv')
+    df = pd.read_csv(path)
+
     lexicon = {}
     for i in df.to_dict(orient='records'):
         lexicon[i['Concepts']] = {'pos': i['Positive'], 'neg': i['Negative']}
 
     neg_list = ["no", "not", "nor", "neither", "aint", "none", "isnt", "wasnt",
-               "doesent", "wont", "never"]
+               "doesnt", "wont", "never"]
+
     intense_list = {"too": 10, "completely": 9, "remarkably": 8, "unusually": 7,
                    "incredibly": 6, "extremely": 5, "really": 4, "very": 3,
                    "totally": 9, "quite": 2, "rather": 2}
+
     deminisher_list = {"bit": 0.5, "little": 0.5, "hardly": 0.5,
                       "barely": 0.5}
 
     pos_instance, neg_instance = 0, 0
     max_pos, min_neg = 1, -1
+    word_value = 0
 
     for index, w in enumerate(text):
         if w in lexicon:
@@ -25,7 +32,7 @@ def evaluate(text):
             right = (index + 5) if (index + 5) < len(text) else len(text) -1
 
             for i in range(left, right+1):
-                if text[i] in neg_lexicon:
+                if text[i] in neg_list:
                     if word_value <= 0:
                         word_value = - word_value - 1
                     else:
