@@ -7,12 +7,12 @@ def evaluate(text):
     neg_list = ["no", "not", "nor", "neither", "aint", "none", "isnt", "wasnt",
                "doesnt", "wont", "never"]
 
-    intense_list = {"too": 10, "completely": 9, "remarkably": 8, "unusually": 7,
-                   "incredibly": 6, "extremely": 5, "really": 4, "very": 3,
-                   "so":4, "totally": 9, "quite": 2, "rather": 2}
+    intense_list = {"too": 5, "completely": 4.5, "remarkably": 4, "unusually": 3.5,
+                   "incredibly": 3, "extremely": 2.5, "really": 2, "very": 2,
+                   "so":4, "totally": 4.5, "quite": 2}
 
     deminisher_list = {"bit": 0.5, "little": 0.5, "hardly": 0.5,
-                      "barely": 0.5, "rather": 0.5}
+                      "barely": 0.5, "rather": 0.5, "slightly": 0.5, "moderately": 0.5}
 
     pos_instance, neg_instance = 0, 0
     max_pos, min_neg = 1, -1
